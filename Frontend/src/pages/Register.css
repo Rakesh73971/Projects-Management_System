@@ -1,0 +1,306 @@
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@600;700&family=DM+Sans:wght@400;500;600&display=swap');
+
+:root {
+  --auth-bg:           #0f0f13;
+  --auth-card-bg:      #17171d;
+  --auth-card-border:  rgba(255, 255, 255, 0.07);
+  --auth-accent:       #6EE7B7;
+  --auth-accent-blue:  #3B82F6;
+  --auth-text:         #ffffff;
+  --auth-text-muted:   rgba(255, 255, 255, 0.45);
+  --auth-text-dim:     rgba(255, 255, 255, 0.25);
+  --auth-input-bg:     rgba(255, 255, 255, 0.05);
+  --auth-input-border: rgba(255, 255, 255, 0.1);
+  --auth-input-focus:  rgba(110, 231, 183, 0.4);
+  --auth-error:        #f87171;
+  --auth-radius:       12px;
+}
+
+.register-page {
+  min-height:      100vh;
+  background:      var(--auth-bg);
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  padding:         24px;
+  font-family:     'DM Sans', sans-serif;
+  position:        relative;
+}
+
+.register-page::before {
+  content:    '';
+  position:   fixed;
+  inset:      0;
+  background-image:
+    linear-gradient(rgba(255,255,255,.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,.03) 1px, transparent 1px);
+  background-size: 48px 48px;
+  pointer-events:  none;
+}
+
+
+.register-card {
+  position:      relative;
+  z-index:       1;
+  width:         100%;
+  max-width:     480px;
+  background:    var(--auth-card-bg);
+  border:        1px solid var(--auth-card-border);
+  border-radius: 20px;
+  padding:       40px 36px;
+  animation:     fadeUp 0.4s ease both;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+
+.register-logo {
+  display:       flex;
+  align-items:   center;
+  gap:           10px;
+  margin-bottom: 28px;
+}
+
+.register-logo-icon {
+  width:           36px;
+  height:          36px;
+  border-radius:   11px;
+  background:      linear-gradient(135deg, var(--auth-accent), var(--auth-accent-blue));
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+}
+
+.register-logo-text {
+  font-family:    'Sora', sans-serif;
+  font-size:      18px;
+  font-weight:    700;
+  color:          var(--auth-text);
+  letter-spacing: -0.4px;
+}
+
+
+.register-heading {
+  font-family:    'Sora', sans-serif;
+  font-size:      22px;
+  font-weight:    700;
+  color:          var(--auth-text);
+  letter-spacing: -0.5px;
+  margin-bottom:  6px;
+}
+
+.register-subheading {
+  font-size:     13px;
+  color:         var(--auth-text-muted);
+  margin-bottom: 28px;
+  line-height:   1.5;
+}
+
+/* ── Form ── */
+.register-form {
+  display:        flex;
+  flex-direction: column;
+  gap:            14px;
+}
+
+/* Two columns on wider card */
+.register-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap:     12px;
+}
+
+@media (max-width: 480px) {
+  .register-row { grid-template-columns: 1fr; }
+}
+
+/* ── Field ── */
+.register-field {
+  display:        flex;
+  flex-direction: column;
+  gap:            6px;
+}
+
+.register-label {
+  font-size:      12px;
+  font-weight:    500;
+  color:          var(--auth-text-muted);
+  letter-spacing: 0.2px;
+}
+
+.register-label span {
+  color:       var(--auth-text-dim);
+  font-size:   11px;
+  margin-left: 3px;
+}
+
+/* ── Input ── */
+.register-input-wrap {
+  position: relative;
+}
+
+.register-input-icon {
+  position:       absolute;
+  left:           12px;
+  top:            50%;
+  transform:      translateY(-50%);
+  color:          var(--auth-text-dim);
+  display:        flex;
+  pointer-events: none;
+  transition:     color 0.2s;
+}
+
+.register-input {
+  width:         100%;
+  background:    var(--auth-input-bg);
+  border:        1px solid var(--auth-input-border);
+  border-radius: var(--auth-radius);
+  padding:       11px 12px 11px 38px;
+  font-size:     13px;
+  font-family:   'DM Sans', sans-serif;
+  color:         var(--auth-text);
+  outline:       none;
+  transition:    border-color 0.2s, box-shadow 0.2s, background 0.2s;
+}
+
+/* Input without left icon */
+.register-input.no-icon {
+  padding-left: 12px;
+}
+
+.register-input::placeholder { color: var(--auth-text-dim); }
+
+.register-input:focus {
+  border-color: var(--auth-accent);
+  background:   rgba(110, 231, 183, 0.04);
+  box-shadow:   0 0 0 3px var(--auth-input-focus);
+}
+
+.register-input-wrap:focus-within .register-input-icon {
+  color: var(--auth-accent);
+}
+
+/* Password toggle */
+.register-pw-toggle {
+  position:    absolute;
+  right:       12px;
+  top:         50%;
+  transform:   translateY(-50%);
+  background:  none;
+  border:      none;
+  cursor:      pointer;
+  color:       var(--auth-text-dim);
+  display:     flex;
+  padding:     0;
+  transition:  color 0.2s;
+}
+
+.register-pw-toggle:hover { color: var(--auth-text-muted); }
+
+/* ── Strength bar (optional, under password) ── */
+.register-strength {
+  margin-top: 6px;
+  display:    flex;
+  gap:        4px;
+}
+
+.register-strength-bar {
+  flex:          1;
+  height:        3px;
+  border-radius: 2px;
+  background:    rgba(255, 255, 255, 0.1);
+  transition:    background 0.3s;
+}
+
+.register-strength-bar.weak   { background: #f87171; }
+.register-strength-bar.medium { background: #fbbf24; }
+.register-strength-bar.strong { background: var(--auth-accent); }
+
+/* ── Divider (optional sections) ── */
+.register-divider {
+  height:     1px;
+  background: var(--auth-card-border);
+  margin:     4px 0;
+}
+
+/* ── Error ── */
+.register-error {
+  background:    rgba(248, 113, 113, 0.1);
+  border:        1px solid rgba(248, 113, 113, 0.2);
+  border-radius: 8px;
+  padding:       10px 12px;
+  font-size:     12px;
+  color:         var(--auth-error);
+  display:       flex;
+  align-items:   center;
+  gap:           7px;
+}
+
+/* ── Submit button ── */
+.register-btn {
+  width:           100%;
+  background:      linear-gradient(135deg, var(--auth-accent), var(--auth-accent-blue));
+  color:           #0f0f13;
+  border:          none;
+  border-radius:   var(--auth-radius);
+  padding:         12px;
+  font-size:       14px;
+  font-weight:     700;
+  font-family:     'DM Sans', sans-serif;
+  cursor:          pointer;
+  transition:      opacity 0.15s, transform 0.15s;
+  margin-top:      6px;
+  display:         flex;
+  align-items:     center;
+  justify-content: center;
+  gap:             8px;
+}
+
+.register-btn:hover    { opacity: 0.9; }
+.register-btn:active   { transform: scale(0.98); }
+.register-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* Spinner */
+.register-spinner {
+  width:         14px;
+  height:        14px;
+  border:        2px solid rgba(15, 15, 19, 0.3);
+  border-top:    2px solid #0f0f13;
+  border-radius: 50%;
+  animation:     spin 0.6s linear infinite;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── Terms note ── */
+.register-terms {
+  font-size:  11px;
+  color:      var(--auth-text-dim);
+  text-align: center;
+  line-height: 1.5;
+}
+
+.register-terms a {
+  color:           var(--auth-accent);
+  text-decoration: none;
+}
+
+/* ── Footer ── */
+.register-footer {
+  text-align: center;
+  margin-top: 24px;
+  font-size:  13px;
+  color:      var(--auth-text-muted);
+}
+
+.register-footer a {
+  color:           var(--auth-accent);
+  text-decoration: none;
+  font-weight:     600;
+  transition:      opacity 0.15s;
+}
+
+.register-footer a:hover { opacity: 0.8; }
