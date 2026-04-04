@@ -3,11 +3,16 @@ from sqlalchemy.orm import Session
 from .. import schemas,models
 from ..database import get_db
 from .. import utils
+from ..oauth2 import get_current_user
 
 router = APIRouter(
     prefix='/users',
     tags=['Users']
 )
+
+@router.get('/me',status_code=status.HTTP_200_OK,response_model=schemas.UserResponse)
+def get_my_user(current_user: models.User = Depends(get_current_user)):
+    return current_user
 
 @router.get('/{id}',status_code=status.HTTP_200_OK,response_model=schemas.UserResponse)
 def get_user(id:int,db:Session=Depends(get_db)):

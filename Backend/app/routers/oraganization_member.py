@@ -11,7 +11,7 @@ router = APIRouter(
     tags=['Oranization Members']
 )
 
-@router.get('/',status_code=status.HTTP_200_OK,response_model=List[schemas.OrganizationMemberResponse])
+@router.get('/',status_code=status.HTTP_200_OK,response_model=List[schemas.OrganizationMemberResponseWithUser])
 def get_organization_members(db:Session=Depends(get_db),current_user=Depends(get_current_user)):
     organization_members = db.query(models.OrganizationMember).all()
     return organization_members

@@ -11,7 +11,7 @@ router = APIRouter(prefix='/organizations',tags=['Organizations'])
 
 
 @router.get('/',status_code=status.HTTP_200_OK,response_model=schemas.OrganizationPaginatedResponse)
-def get_organizations(db:Session=Depends(get_db),current_user=Depends(get_current_user),limit:int=Query(10,ge=1,le=10),page:int=Query(1,ge=1),search:Optional[str]="",sort_by:str=Query("id"),order:str=Query("asc")):
+def get_organizations(db:Session=Depends(get_db),current_user=Depends(get_current_user),limit:int=Query(10,ge=1,le=100),page:int=Query(1,ge=1),search:Optional[str]="",sort_by:str=Query("id"),order:str=Query("asc")):
     sort_feilds = {
         'id':models.Organization.id,
         'name':models.Organization.name,
