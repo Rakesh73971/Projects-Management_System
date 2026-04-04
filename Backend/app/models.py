@@ -1,6 +1,7 @@
 from .database import Base
 from sqlalchemy import Column,Integer,String,Text,TIMESTAMP,ForeignKey
 from sqlalchemy import func
+from sqlalchemy.orm import relationship
 
 class User(Base):
     __tablename__ = "users"
@@ -11,6 +12,9 @@ class User(Base):
     password = Column(String,nullable=False)
     designation = Column(String, nullable=True) 
     tech_stack = Column(String, nullable=True)
+    
+    # Relationships
+    organization_members = relationship("OrganizationMember", back_populates="user")
 
 class Organization(Base):
     __tablename__="organizations"
@@ -21,6 +25,7 @@ class Organization(Base):
     description = Column(Text)
     createdAt = Column(TIMESTAMP(timezone=True),server_default=func.now(),nullable=False)
     updatedAt = Column(TIMESTAMP(timezone=True),server_default=func.now(),onupdate=func.now(),nullable=False)
+
 class OrganizationMember(Base):
     __tablename__ = "organization_members"
 
@@ -28,6 +33,9 @@ class OrganizationMember(Base):
     user_id = Column(Integer, ForeignKey("users.id"))
     organization_id = Column(Integer, ForeignKey("organizations.id"))
     role = Column(String, server_default="member")
+    
+    # Relationships
+    user = relationship("User", back_populates="organization_members")
 
 
 
