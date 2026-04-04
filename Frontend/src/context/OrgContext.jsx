@@ -1,13 +1,12 @@
-import { createContext, useContext } from "react";
+import { createContext, useContext, useState } from "react";
 
 const OrgContext = createContext();
 
 export function OrgProvider({ children }) {
-
-  const currentOrg = { name: "Acme Corp" };
+  const [currentOrg, setCurrentOrg] = useState(null);
 
   return (
-    <OrgContext.Provider value={{ currentOrg }}>
+    <OrgContext.Provider value={{ currentOrg, setCurrentOrg }}>
       {children}
     </OrgContext.Provider>
   );
