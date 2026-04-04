@@ -32,6 +32,16 @@ class OrganizationMemberResponse(OrganizationMemberCreate):
     class Config:
         from_attributes = True
 
+class OrganizationMemberResponseWithUser(BaseModel):
+    id : int
+    user_id : int
+    organization_id : int
+    role : str
+    user: UserResponse
+    
+    class Config:
+        from_attributes = True
+
 class OrganizationCreate(BaseModel):
     name: str
     status: str
