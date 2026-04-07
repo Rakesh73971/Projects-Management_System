@@ -5,6 +5,7 @@ import Register from "../pages/Register";
 import Home from "../pages/Home";
 import OrganizationDashboard from "../pages/OrganizationDashboard";
 import ProjectDashboard from "../pages/ProjectDashboard";
+import ProtectedRoute from "../components/ProtectedRoute";
 
 const TaskBoard = () => (
   <div style={{ padding: 24, fontFamily: "sans-serif" }}>
@@ -24,6 +25,12 @@ const NewProject = () => (
   </div>
 );
 
+const Profile = () => (
+  <div style={{ padding: 24, fontFamily: "sans-serif" }}>
+    Profile — coming soon
+  </div>
+);
+
 const Settings = () => (
   <div style={{ padding: 24, fontFamily: "sans-serif" }}>
     Settings — coming soon
@@ -36,14 +43,81 @@ export default function AppRoutes() {
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/" element={<Navigate to="/dashboard" replace />} />
-      <Route path="/dashboard" element={<Home />} />
-      <Route path="/organizations" element={<OrganizationDashboard />} />
-      <Route path="/projects" element={<ProjectDashboard />} />
-      <Route path="/projects/new" element={<NewProject />} />
-      <Route path="/projects/:id/tasks" element={<TaskBoard />} />
-      <Route path="/tasks" element={<TaskBoard />} />
-      <Route path="/members" element={<MembersPage />} />
-      <Route path="/settings" element={<Settings />} />
+
+      {/* Protected Routes */}
+      <Route
+        path="/dashboard"
+        element={
+          <ProtectedRoute>
+            <Home />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/organizations"
+        element={
+          <ProtectedRoute>
+            <OrganizationDashboard />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/projects"
+        element={
+          <ProtectedRoute>
+            <ProjectDashboard />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/projects/new"
+        element={
+          <ProtectedRoute>
+            <NewProject />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/projects/:id/tasks"
+        element={
+          <ProtectedRoute>
+            <TaskBoard />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/tasks"
+        element={
+          <ProtectedRoute>
+            <TaskBoard />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/members"
+        element={
+          <ProtectedRoute>
+            <MembersPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/profile"
+        element={
+          <ProtectedRoute>
+            <Profile />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/settings"
+        element={
+          <ProtectedRoute>
+            <Settings />
+          </ProtectedRoute>
+        }
+      />
+
       <Route path="*" element={<Navigate to="/dashboard" replace />} />
     </Routes>
   );

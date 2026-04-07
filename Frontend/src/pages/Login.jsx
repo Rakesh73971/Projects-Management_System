@@ -108,9 +108,9 @@ export default function Login() {
     setError("");
 
     try {
-      const data = await loginAPI(form);
-      localStorage.setItem("token", data.access_token);
+      await loginAPI(form);
 
+      // Token is already saved in authService, now get user info
       const currentUser = await getCurrentUser();
       setUser(currentUser);
 

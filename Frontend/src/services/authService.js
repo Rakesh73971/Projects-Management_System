@@ -2,6 +2,40 @@ import axios from "axios";
 
 const API_URL = "http://localhost:8000";
 
+// Create axios instance with interceptors
+export const apiClient = axios.create({
+  baseURL: API_URL,
+  headers: {
+    "Content-Type": "application/json",
+  },
+});
+
+// Request interceptor to add token to headers
+apiClient.interceptors.request.use(
+  (config) => {
+    const token = getToken();
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
+// Response interceptor to handle 401 errors
+apiClient.interceptors.response.use(
+  (response) => response,
+  (error) => {
+    if (error.response?.status === 401) {
+      localStorage.removeItem("token");
+      window.location.href = "/login";
+    }
+    return Promise.reject(error);
+  }
+);
+
 // ------------------- LOGIN -------------------
 export const login = async ({ email, password }) => {
   const formData = new URLSearchParams();
@@ -25,6 +59,9 @@ export const login = async ({ email, password }) => {
       throw new Error("Login response missing access token");
     }
 
+    // Store token
+    localStorage.setItem("token", access_token);
+
     return {
       ...data,
       access_token,
@@ -41,11 +78,7 @@ export const getCurrentUser = async () => {
   }
 
   try {
-    const response = await axios.get(`${API_URL}/users/me`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+    const response = await apiClient.get(`/users/me`);
     return response.data;
   } catch (error) {
     throw error.response?.data?.detail || error.message || "Unable to fetch current user";
