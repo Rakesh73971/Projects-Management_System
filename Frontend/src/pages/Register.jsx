@@ -135,7 +135,7 @@ function getStrength(pw) {
   if (/[A-Z]/.test(pw)) score++;
   if (/[0-9]/.test(pw)) score++;
   if (/[^A-Za-z0-9]/.test(pw)) score++;
-  return score; // 0–4
+  return score; 
 }
 
 function strengthClass(score, index) {
@@ -154,8 +154,8 @@ export default function Register() {
     name: "",
     email: "",
     password: "",
-    designation: "", // User.designation
-    tech_stack: "", // User.tech_stack
+    designation: "", 
+    tech_stack: "", 
   });
 
   const [showPw, setShowPw] = useState(false);

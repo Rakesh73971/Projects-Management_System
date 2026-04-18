@@ -25,7 +25,7 @@ function CreateProjectModal({ onClose, onCreate, orgId }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!form.name.trim()) return;
-    onCreate({ ...form, organizationId: orgId }); // POST /projects
+    onCreate({ ...form, organizationId: orgId }); 
     onClose();
   };
 

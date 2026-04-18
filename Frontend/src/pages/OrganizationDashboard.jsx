@@ -16,7 +16,7 @@ function CreateOrgModal({ onClose, onCreate }) {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!form.name.trim()) return;
-    onCreate(form); // → organizationService.create(form)
+    onCreate(form); 
     onClose();
   };
 
@@ -129,7 +129,7 @@ export default function OrganizationDashboard() {
     const loadMembers = async () => {
       try {
         const data = await getOrganizationMembers();
-        // Add color gradient to members for avatars
+        
         const membersWithColor = data.map((m, i) => ({
           ...m,
           bg: [
